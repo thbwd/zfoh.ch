@@ -74,7 +74,7 @@ function render2024logo(canvasId, model) {
       mat4.rotate(
         modelViewMatrix, // destination matrix
         modelViewMatrix, // matrix to rotate
-        Math.PI / 4 + cubeRotation,
+        Math.PI / 4 + (Math.PI / 4),
         [0, 1, 0]
       ); // axis to rotate around (Y)
 
@@ -191,18 +191,11 @@ function render2024logo(canvasId, model) {
       return shader;
     }
 
-    function maximizeCanvas(canvas) {
-        let rect = canvas.parentElement.getClientRects()[0];
-        canvas.width = rect.width;
-        canvas.height = rect.width;
-    }
-
     function main() {
       let cubeRotation = 0.0;
       let deltaTime = 0;
 
       const canvas = document.getElementById(canvasId);
-      maximizeCanvas(canvas);
       const gl = canvas.getContext("webgl");
 
       if (gl === null) {

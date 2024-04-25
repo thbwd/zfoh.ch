@@ -74,7 +74,7 @@ function render2024logo(canvasId, model) {
       mat4.rotate(
         modelViewMatrix, // destination matrix
         modelViewMatrix, // matrix to rotate
-        Math.PI / 4 + (Math.PI / 4),
+        Math.PI / 4,
         [0, 1, 0]
       ); // axis to rotate around (Y)
 

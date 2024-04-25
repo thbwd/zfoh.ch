@@ -316,19 +316,26 @@ function zurihac2024logo() {
         ]);
     };
 
+    //- #dba93b / rgb(0.859, 0.663, 0.231)
+    //- #d04832 / rgb(0.816, 0.282, 0.196)
+    //- #00a3ca / rgb(0.0, 0.639, 0.792)
+
+    function tint(c) {
+      return [c[0] * 0.7, c[1] * 0.7, c[2] * 0.7, c[3]];
+    }
     function frontcol(p) {
-        const top = [234/255, 137/255, 109/255, 1];
-        const bottom = [211/255, 32/255, 32/255, 1];
+        const top = [0.859, 0.663, 0.231, 1]
+        const bottom = tint(top);
         return lerp(bottom, top, p[1]);
     };
     function topcol(p) {
-        const l = [230/255, 196/255, 146/255, 1];
-        const r = [218/255, 163/255, 81/255, 1];
+        const l = [0.0, 0.639, 0.792, 1];
+        const r = tint(l);
         return lerp(l, r, p[0]);
     };
     function shadecol (p) {
-        const top = [0.3, 0.3, 0.4, 1];
-        const bottom = [0.2, 0.2, 0.3, 1];
+        const top = [0.816, 0.282, 0.196, 1];
+        const bottom = tint(top);
         return lerp(bottom, top, 1 - p[1]);
     };
     const cubelw = 0.2;

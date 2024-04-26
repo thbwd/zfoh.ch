@@ -316,26 +316,99 @@ function zurihac2024logo() {
         ]);
     };
 
-    //- #dba93b / rgb(0.859, 0.663, 0.231)
-    //- #d04832 / rgb(0.816, 0.282, 0.196)
-    //- #00a3ca / rgb(0.0, 0.639, 0.792)
+    const delphin = [
+        [0.447, 0.475, 0.498, 1],
+        [0.443, 0.69, 0.804, 1],
+        [0.843, 0.733, 0.608, 1],
+        [0, 0, 0, 1],
+    ];
+
+    const schulhausweiss = [
+        [0.0, 0.373, 0.663, 1],
+        [0.867, 0.847, 0.816, 1],
+        [0.816, 0.718, 0.604, 1],
+        [0, 0, 0, 1],
+    ];
+
+    const ariel = [
+        [0.518, 0.663, 0.773, 1],
+        [0.882, 0.843, 0.773, 1],
+        [0.839, 0.757, 0.631, 1],
+        [0, 0, 0, 1],
+    ];
+
+    const ziegelblau = [
+        [0.867, 0.847, 0.816, 1],
+        [0.667, 0.376, 0.31, 1],
+        [0.118, 0.616, 0.796, 1],
+        [0, 0, 0, 1],
+    ];
+
+    const supersardine = [
+        [0.859, 0.82, 0.757, 1],
+        [0.0, 0.357, 0.612, 1],
+        [0.369, 0.525, 0.553, 1],
+        [0, 0, 0, 1],
+    ];
+
+    const sportbunt = [
+        [0.816, 0.282, 0.196, 1],
+        [0.859, 0.663, 0.231, 1],
+        [0.0, 0.639, 0.792, 1],
+        [0.35, 0.1, 0.1, 1],
+        // [0.04, 0.30, 0.04, 1],
+    ];
+
+    const n64 = [
+        darken([0.023, 0.56, 0.18, 1]),
+        [0.97, 0.72, 0.03, 1],
+        [0.03, 0.10, 0.64, 1],
+        darken([0.96, 0.12, 0.08, 1]),
+    ];
+
+    function hexToRgb(hex) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return [
+        parseInt(result[1], 16) / 255,
+        parseInt(result[2], 16) / 255,
+        parseInt(result[3], 16) / 255,
+        1
+      ];
+    }
+
+    const club = [
+      [0.9, 0.8, 0.8, 1],
+      hexToRgb("#ec8f70"),
+      hexToRgb("#38ab84"),
+      hexToRgb("#ff6507"),
+    ];
+
+    const scheme = club;
 
     function tint(c) {
-      return [c[0] * 0.7, c[1] * 0.7, c[2] * 0.7, c[3]];
+      return lerp(c, [1, 1, 1, 1], 0.25);
+    }
+    function darken(c) {
+      return lerp(c, [0, 0, 0, 1], 0.3);
     }
     function frontcol(p) {
-        const top = [0.859, 0.663, 0.231, 1]
-        const bottom = tint(top);
+        const bottom = scheme[2];
+        const top = tint(bottom);
+        return lerp(bottom, top, p[1]);
+    };
+    function sidecol(p) {
+        const bottom = scheme[0];
+        const top = tint(bottom);
         return lerp(bottom, top, p[1]);
     };
     function topcol(p) {
-        const l = [0.0, 0.639, 0.792, 1];
+        const l = scheme[1];
         const r = tint(l);
         return lerp(l, r, p[0]);
     };
     function shadecol (p) {
-        const top = [0.816, 0.282, 0.196, 1];
-        const bottom = tint(top);
+        const top = scheme[3];
+        const bottom = darken(top);
         return lerp(bottom, top, 1 - p[1]);
     };
     const cubelw = 0.2;
@@ -366,19 +439,19 @@ function zurihac2024logo() {
             } else if(p0[0] == 0 && q0[0] == 0) {
                 return empty();  // Prevent colliding with z.
             } else if(p0[0] == 1 && q0[0] == 1) {
-                return color(frontcol, rec);
+                return color(sidecol, rec);
             } else {
                 return color(shadecol, rec);
             }
         })),
         back,
         sidez(cubelw, function(xy) {
-            return color(frontcol, function(point) {
+            return color(sidecol, function(point) {
                 return point([0.0, xy[1], xy[0]]);
             });
         }),
         color(
-            frontcol,
+            sidecol,
             function(point) {
                 return text(glyphs, "zurihac'24", 1, function(p) {
                     return point([1, 1 - fonth + p[1], p[0]]);
